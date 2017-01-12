@@ -1,14 +1,14 @@
 syntax = "proto3";
 package actor;
-option csharp_namespace = "GAM";
+option csharp_namespace = "Proto";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message PID {
-    string Host = 1;
+    option (gogoproto.stringer) = false;
+    string Address = 1;
     string Id = 2;
 }
-
-//user messages
-message PoisonPill {}
 
 // router management messages
 message RouterAddRoutee {
@@ -29,6 +29,9 @@ message RouterRoutees {
     repeated actor.PID PIDs = 1;
 }
 
+//user messages
+message PoisonPill {}
+
 //system messages
 message Watch {
     PID watcher = 1;
@@ -38,4 +41,5 @@ message Unwatch {
 }
 message Terminated {
     PID who = 1;
+    bool AddressTerminated = 2;
 }
